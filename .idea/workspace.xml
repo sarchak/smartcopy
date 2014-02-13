@@ -23,10 +23,39 @@
       <file leaf-file-name="test.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="16" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.7474452">
+            <state line="52" column="4" selection-start="1692" selection-end="1692" vertical-scroll-proportion="0.51386863">
               <folding>
                 <element signature="e#18#29#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="final.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/final.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SmartDropboxClient.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SmartDropboxClient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="412" selection-end="442" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#23#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cpuhog.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cpuhog.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -265,13 +294,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cpuhog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/newdaemon.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.951825">
@@ -280,13 +302,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pexample.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SmartDropboxClient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -302,6 +317,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cpuhog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/daemon.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="126" column="11" selection-start="3619" selection-end="3619" vertical-scroll-proportion="0.0">
@@ -309,9 +331,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/final.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SmartDropboxClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="412" selection-end="442" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#23#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="16" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.7474452">
+        <state line="52" column="4" selection-start="1692" selection-end="1692" vertical-scroll-proportion="0.51386863">
           <folding>
             <element signature="e#18#29#0" expanded="true" />
           </folding>

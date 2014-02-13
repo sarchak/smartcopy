@@ -1,18 +1,13 @@
 #!/usr/bin/python
 import time
 from watchdog.observers import Observer
-from watchdog.observers.api import ObservedWatch
 from watchdog.events import FileSystemEventHandler
-from watchdog.observers.api import EventEmitter
 import re
-from watchdog.observers.api import EventQueue
-from watchdog.observers.polling import PollingEmitter as Emitter
-from daemon import Daemon
 import os
 import sys
 import threading
 from Queue import Queue
-
+from os.path import expanduser
 
 class MyHandler(FileSystemEventHandler):
     def __init__(self,src,dest,dirstocreate,filestocopy,lock):
@@ -23,60 +18,54 @@ class MyHandler(FileSystemEventHandler):
         self.lock = lock
         print "In handler init"
     def on_created(self, event):
+#        home = expanduser("~")
+#        if(event.src_path == home+"/.smartdropbox/config"):
+#            print "Should reload"
+#            fd = open("/tmp/Should_Reload","w+")
+#            fd.write("Should reload create")
+#            fd.close()
+
         patterns = re.compile(".class$|.json$|.jar|target|.git")
-
-        print event.src_path
-        fd = open("/tmp/fcreate","w")
-        fd.write(event.src_path)
-        fd.close()
-
         if len(patterns.findall(event.src_path)) == 0:
-            self.lock.acquire()
             if(event.is_directory):
                 print event.src_path
-#                self.dirstocreate.append(event.src_path)
                 self.dirstocreate.put(event.src_path)
             else:
                 print event.src_path
-#                self.filestocopy.append(event.src_path)
                 self.filestocopy.put(event.src_path)
-            self.lock.release()
-#            if(event.src_path in dirstocreate):
-#                dirstocreate.remove(event.src_path)
-#            if(event.src_path in filestocopy):
-#                filestocopy.remove(event.src_path)
-
+    def on_modified(self, event):
+        home = expanduser("~")
+        if(event.src_path == home+"/.smartdropbox/config"):
+            print "Should reload"
+            fd = open("/tmp/Should_Reload","w+")
+            fd.write("Should reload")
+            fd.close()
 
 def runme():
     src = "/tmp/source/"
     dest = "/tmp/destination/"
+    home = expanduser("~")
     dirstocreate = Queue()
     filestocopy = Queue()
     lock = threading.Lock()
     handler = MyHandler(src,dest,dirstocreate,filestocopy,lock)
     observer = Observer()
     observer.schedule(handler, path='/tmp/source', recursive=True)
+    observer.schedule(handler, path=home+"/.smartdropbox/", recursive=True)
     observer.start()
 
     try:
         while True:
             time.sleep(1)
-            #for dir in dirstocreate:
             while(not dirstocreate.empty()):
                 dir = dirstocreate.get()
                 os.system("mkdir -p " + dest+dir.replace(src,""))
                 print "mkdir -p " + dest+dir.replace(src,"")
-            lock.acquire()
-            #dirstocreate = []
-            lock.release()
-#            for file in filestocopy:
+
             while(not filestocopy.empty()):
                 file = filestocopy.get()
                 print "## cp "+file+" "+dest+file.replace(src,"")
                 os.system("cp "+file+" "+dest+file.replace(src,""))
-            lock.acquire()
-            #filestocopy = []
-            lock.release()
 
     except KeyboardInterrupt:
         observer.stop()
