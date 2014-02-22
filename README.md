@@ -38,8 +38,22 @@ smartcopy allows you to change the config file and modify any ignore pattern rul
    * sudo python setup.py install 
 
 ### Starting the daemon
- 
-   * terminal$ smartcopyd
+
+<pre><code>
+
+Shrikars-MacBook-Pro:~ shrikar$ smartcopyd
+Shrikars-MacBook-Pro:~ shrikar$ smartcopy
+/Users/shrikar/.smartcopy
+Starting SmartCopy Engine...
+smartcopy> add .*.jpg
+Adding this pattern to ignore path :  .*.jpg
+smartcopy> add .*.pdf
+Adding this pattern to ignore path :  .*.pdf
+smartcopy> add .*.jar
+Adding this pattern to ignore path :  .*.jar
+smartcopy>
+</code></pre>
+
   
 The above command will create a directory called SmartCopy in your home folder feel free to drag it to the finder sidebar or where ever its convenient for you to copy files.
 
