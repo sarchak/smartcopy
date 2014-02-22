@@ -58,3 +58,4 @@ The above command will create a directory called SmartCopy in your home folder f
 
 ### Important : While syncing files DO NOT COPY OR MOVE files directly to the dropbox folder instead copy/move to SmartCopy folder which will filter the files and sync's them to the dropbox folder.
 
+[More Info](http://shrikar.com/blog/2014/02/21/smartcopy-intelligent-layer-on-top-of-existing-cloud-storage/)
