@@ -5,7 +5,7 @@ Intelligent layer on top of existing cloud storage
 
 ### Requirements
    
-   * Unix based files systems with fork support
+   * Unix based OS with fork support and support for watching filesystem changes through inotify, FSEvents or  kqueue.
    * python 2.7 and above
    
 ### Design
