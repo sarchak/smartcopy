@@ -29,10 +29,11 @@ smartcopy allows you to change the config file and modify any ignore pattern rul
 ### Installation
 
 #### Method 1 ( For using the latest stable branch)
-   1 sudo easy_install smartcopy
+
+   * sudo easy_install smartcopy
 
 #### Method 2 ( For current development branch)
-   1 git clone https://github.com/sarchak/smartcopy.git
-   2 cd smartcopy
-   3 sudo python setup.py install 
+   * git clone https://github.com/sarchak/smartcopy.git
+   * cd smartcopy
+   * sudo python setup.py install 
 
