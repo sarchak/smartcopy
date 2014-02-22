@@ -7,7 +7,8 @@ import os
 from smartutils import get_config
 from smartutils import get_db
 from smartutils import reload_config
-
+import subprocess
+import sys
 class MyPrompt(Cmd):
 
     def __init__(self):
@@ -27,14 +28,24 @@ class MyPrompt(Cmd):
         fd.close()
 
     def do_change_config(self,args):
-        fd = open(get_config(),"w")
+        """In case you want to change the path of the location which need to be watched or the destination 
+        path use this command. Please note after this you need to restart the smartcopyd ( Smart copy daemon)."""
+        fd = open(get_config()+".bk","w")
         source = raw_input("Enter local directory: ")
         destination = raw_input("Enter Dropbox/Box/Google mounted path: ")
         fd.write("source="+source+"\n")
         fd.write("destination="+destination+"\n")
         fd.close()
+        os.system("mv "+get_config()+".bk " + get_config())
+        os.system("pkill -f smartcopyd")
+        print("=================================================================")
+        print("!!!! Important information !!!!")
+        print "Please restart the smartcopyd.\nExample : \nsmartcopyd"
+        print("=================================================================")
+        sys.exit(0)
 
     def do_display_config(self,args):
+        """Displays the current source and the destination path."""
         src,dest = reload_config()
         print "Local directory : " + src
         print "Dropbox/Box/Google mounted path : " + dest
@@ -76,13 +87,15 @@ class MyPrompt(Cmd):
 if __name__ == '__main__':
     home = expanduser("~")
     smartdir = home+"/.smartcopy"
-    print smartdir
     if(not os.path.exists(smartdir)):
         os.system("mkdir -p " + smartdir)
         if(not os.path.exists(get_config())):
-            os.system("touch "+get_config())
+            fd = open(get_config(),"w")
+            fd.write("source="+home+"/SmartCopy\n")
+            fd.write("destination="+home+"/Dropbox\n")
+            fd.close()
         if(not os.path.exists(get_db())):
-            os.system("touch "+get_db())
+            subprocess.call(["touch ",get_db()])
 
     prompt = MyPrompt()
     prompt.prompt = 'smartcopy> '

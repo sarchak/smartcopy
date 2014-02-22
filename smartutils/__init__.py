@@ -33,4 +33,4 @@ def get_patterns():
     return "|".join(tmp)
 
 def quote(argument):
-    return argument.replace(" ","\ ")
+    return argument.replace(" ","\ ").replace("*","\*").replace("$","\$").replace("^","\^")

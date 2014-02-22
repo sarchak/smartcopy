@@ -1,0 +1,10 @@
+setup.py
+smartcopy/smartcopy
+smartcopy/smartcopyd
+smartcopy.egg-info/PKG-INFO
+smartcopy.egg-info/SOURCES.txt
+smartcopy.egg-info/dependency_links.txt
+smartcopy.egg-info/not-zip-safe
+smartcopy.egg-info/requires.txt
+smartcopy.egg-info/top_level.txt
+smartutils/__init__.py

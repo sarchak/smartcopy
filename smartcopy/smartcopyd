@@ -1,0 +1,136 @@
+#!/usr/bin/python
+import time
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import re
+import os
+import sys
+import subprocess
+from Queue import Queue
+from os.path import expanduser
+from smartutils import get_config
+from smartutils import get_db
+from smartutils import reload_config
+from smartutils import get_patterns
+from smartutils import quote
+
+class MyHandler(FileSystemEventHandler):
+    def __init__(self,src,dest,dirstocreate,filestocopy,filestodelete):
+        self.src = src
+        self.dest = dest
+        self.dirstocreate = dirstocreate
+        self.filestocopy = filestocopy
+        self.filestodelete = filestodelete
+        self.patterns = re.compile(get_patterns())
+
+
+    def on_created(self, event):
+        ## Ignore the created event for the backup file generated
+        ## during the change config phase
+
+        if(event.src_path == get_config()+".bk"):
+            return;
+
+        ## If there is not pattern match for the files to be ignored or there are no rules
+        ## in the database add to the files to be copied case.
+        if len(self.patterns.findall(event.src_path)) == 0 or os.path.getsize(get_db()) == 0:
+            if(event.is_directory):
+                self.dirstocreate.put(event.src_path)
+            else:
+                self.filestocopy.put(event.src_path)
+
+
+    def on_moved(self, event):
+        ## Delegate to the on created
+        self.on_created(event)
+
+    def on_deleted(self, event):
+        ## Add the file to the list of files to be deleted
+        self.filestodelete.put(event.src_path)
+
+    def on_modified(self, event):
+        ## If the file modified is the config file. Then reload the config file
+        if(event.src_path == get_config()):
+            self.src,self.dest = reload_config()
+        ## If the file modified is the db file. Then reload the patterns
+        elif(event.src_path == get_db()):
+            self.patterns = re.compile(get_patterns())
+        elif(event.src_path == get_config()+".bk"):
+            None
+        else :
+            self.on_created(event)
+        
+def runme():
+    src,dest = reload_config()
+    home = expanduser("~")
+    dirstocreate = Queue()
+    filestocopy = Queue()
+    filestodelete = Queue()
+    handler = MyHandler(src,dest,dirstocreate,filestocopy,filestodelete)
+    observer = Observer()
+    observer.schedule(handler, path=src, recursive=True)
+    observer.schedule(handler, path=home+"/.smartcopy/", recursive=True)
+    observer.start()
+
+    try:
+        while True:
+            time.sleep(1)
+
+            while(not filestodelete.empty()):
+                file = filestodelete.get()
+                rfile = dest+file.replace(src,"")
+                if(os.path.isfile(rfile)):
+                    subprocess.call(["rm",rfile])
+                if(os.path.isdir(rfile) and rfile.startswith(dest)):
+                    subprocess.call(["rm","-rf",rfile])
+
+            while(not dirstocreate.empty()):
+                dir = dirstocreate.get()
+                subprocess.call(["mkdir","-p",quote(dest+dir.replace(src,""))])
+
+            while(not filestocopy.empty()):
+                file = filestocopy.get()
+                subprocess.call(["cp",file,dest+file.replace(src,"")])
+
+
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+if __name__ == "__main__":
+    home = expanduser("~")
+    smartdir = home+"/.smartcopy"
+
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0)
+        else :
+            if(not os.path.exists(home+"/SmartCopy")):
+                subprocess.call(["mkdir","-p",quote(home+"/SmartCopy")])
+            if(not os.path.exists(home+"/Dropbox")):
+                subprocess.call(["mkdir","-p",quote(home+"/Dropbox")])
+            if(not os.path.exists(smartdir)):
+                subprocess.call(["mkdir","-p",quote(smartdir)])
+                if(not os.path.exists(get_config())):
+                    fd = open(get_config(),"w")
+                    fd.write("source="+home+"/SmartCopy\n")
+                    fd.write("destination="+home+"/Dropbox\n")
+                    fd.close()
+                if(not os.path.exists(get_db())):
+                    subprocess.call(["touch",get_db()])
+
+    except OSError, e:
+        print >> sys.stderr, "fork failed: %d (%s)" % (e.errno, e.strerror)
+        sys.exit(1)
+
+    os.chdir("/")
+    os.setsid()
+    os.umask(0)
+    f = open(os.devnull, 'w')
+    sys.stdout = f
+    sys.stderr = f
+    runme()
+
+
+
