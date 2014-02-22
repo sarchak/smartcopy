@@ -39,8 +39,8 @@ smartcopy allows you to change the config file and modify any ignore pattern rul
 
 ### Starting the daemon
  
-   * terminal$ smartcopydaemon
-
+   * terminal$ smartcopyd
+  
 The above command will create a directory called SmartCopy in your home folder feel free to drag it to the finder sidebar or where ever its convenient for you to copy files.
 
 ### Important : While syncing files DO NOT COPY OR MOVE files directly to the dropbox folder instead copy/move to SmartCopy folder which will filter the files and sync's them to the dropbox folder.
