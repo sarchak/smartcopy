@@ -40,7 +40,6 @@ smartcopy allows you to change the config file and modify any ignore pattern rul
 ### Starting the daemon
 
 <pre><code>
-
 Shrikars-MacBook-Pro:~ shrikar$ smartcopyd
 Shrikars-MacBook-Pro:~ shrikar$ smartcopy
 /Users/shrikar/.smartcopy
