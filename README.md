@@ -3,6 +3,11 @@ smartcopy
 
 Intelligent layer on top of existing cloud storage
 
+### Requirements
+   
+   * Unix based files systems with fork support
+   * python 2.7 and above
+   
 ### Design
 
 I followed a similar method to .gitignore and hence decided to have a list of all the pattern that need to be ignored from syncing
